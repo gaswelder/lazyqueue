@@ -1,0 +1,41 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "4c3d37e0fb3d828f65ac70c24d3c6776",
+    "content-hash": "a13461698892c446c1e36eeee4d33d55",
+    "packages": [
+        {
+            "name": "gaswelder/havana",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gaswelder/havana",
+                "reference": "70684cbb5c4ecf087b3b594400a2abf3253ce4f3"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "main.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Nano-framework",
+            "time": "2018-03-03 21:57:15"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "gaswelder/havana": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

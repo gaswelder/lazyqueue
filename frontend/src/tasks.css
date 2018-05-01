@@ -1,0 +1,27 @@
+.task {
+	background-color: white;
+	border-bottom: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 6px;
+	padding: 12px;
+	display: flex;
+	color: #666;
+}
+
+.task.first {
+	color: #333;
+	font-weight: bolder;
+}
+
+.task > span {
+	flex: 1;
+	max-width: 50%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.icon-button {
+	border: none;
+	background: transparent;
+	box-shadow: none;
+}
