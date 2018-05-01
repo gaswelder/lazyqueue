@@ -47,7 +47,7 @@ export default class TasksList extends React.Component {
 			s => ({ saving: s.saving + 1 }),
 			async () => {
 				try {
-					await Tasks.update(this.state.tasks);
+					await Tasks.update(this.props.userHash, this.state.tasks);
 				} catch (e) {
 					alert("Couldn't save the list: " + e);
 				}
@@ -57,7 +57,7 @@ export default class TasksList extends React.Component {
 	}
 
 	async componentDidMount() {
-		const tasks = await Tasks.get();
+		const tasks = await Tasks.get(this.props.userHash);
 		this.setState({ tasks, ready: true });
 	}
 

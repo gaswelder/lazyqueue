@@ -23,8 +23,8 @@ function parse(rec) {
 }
 
 export default {
-	update(list) {
-		return fetch("/lists/foo", {
+	update(id, list) {
+		return fetch("/lists/" + id, {
 			method: "POST",
 			body: JSON.stringify(list.map(format)),
 			headers: {
@@ -44,8 +44,8 @@ export default {
 		};
 	},
 
-	get() {
-		return fetch("/lists/foo")
+	get(id) {
+		return fetch("/lists/" + id)
 			.then(r => r.json())
 			.then(list => list.map(parse));
 	}
