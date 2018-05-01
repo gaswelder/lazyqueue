@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import sha1 from "sha1";
 import TasksList from "./TasksList";
 
 class Login extends React.Component {
@@ -32,7 +33,7 @@ class App extends React.Component {
 	}
 
 	login(pass) {
-		this.setState({ userHash: pass });
+		this.setState({ userHash: sha1(pass) });
 	}
 
 	logout() {
