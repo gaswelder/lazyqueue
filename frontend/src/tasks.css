@@ -1,11 +1,12 @@
 .task {
 	background-color: white;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #9fa8da;
 	border-radius: 3px;
 	margin-bottom: 6px;
 	padding: 12px;
 	display: flex;
-	color: #666;
+	align-items: center;
+	color: #323752;
 }
 
 .task.first {
@@ -13,9 +14,15 @@
 	font-weight: bolder;
 }
 
+.delete,
+.check {
+	line-height: 100%;
+	opacity: 0.6;
+	font-size: 140%;
+}
+
 .task > span {
 	flex: 1;
-	max-width: 50%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -24,4 +31,8 @@
 	border: none;
 	background: transparent;
 	box-shadow: none;
+}
+
+.icon-button:first-child {
+	padding-left: 0;
 }

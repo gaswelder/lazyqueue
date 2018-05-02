@@ -3,10 +3,13 @@ import ReactDOM from "react-dom";
 import sha1 from "sha1";
 import TasksList from "./TasksList";
 
+import styles from "./login.css";
+
 class Login extends React.Component {
 	render() {
 		return (
 			<form
+				className={styles.form}
 				onSubmit={e => {
 					e.preventDefault();
 					this.props.onSubmit(this.input.value);
