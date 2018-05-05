@@ -137,7 +137,9 @@ export default class TasksList extends React.Component {
 						/>
 					</div>
 				))}
-				<button onClick={() => this.create()}>Create</button>
+				<button className={foo.create} onClick={() => this.create()}>
+					Create
+				</button>
 				<h2>Done</h2>
 				{done.map(t => (
 					<div key={t.id}>

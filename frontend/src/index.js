@@ -49,7 +49,9 @@ class App extends React.Component {
 		}
 		return (
 			<div>
-				<button onClick={this.logout}>Logout</button>
+				<button className={styles.logout} onClick={this.logout}>
+					Logout
+				</button>
 				<TasksList userHash={this.state.userHash} />
 			</div>
 		);
