@@ -1,41 +1,7 @@
 import React from "react";
 import foo from "./tasks.css";
 import Tasks from "./tasks";
-
-function IconButton(props) {
-	const className = [foo["icon-button"], props.className]
-		.filter(x => x)
-		.join(" ");
-	return (
-		<button className={className} onClick={props.onClick}>
-			{props.text}
-		</button>
-	);
-}
-
-function Task(props) {
-	return (
-		<div className={foo.task + (props.first ? " " + foo.first : "")}>
-			{!props.first &&
-				props.onTopClick && <IconButton text="▲" onClick={props.onTopClick} />}
-			<span>{props.name}</span>
-			{props.onDoneClick && (
-				<IconButton
-					className={foo.check}
-					text="✓"
-					onClick={props.onDoneClick}
-				/>
-			)}
-			{props.onRemoveClick && (
-				<IconButton
-					className={foo.delete}
-					text="×"
-					onClick={props.onRemoveClick}
-				/>
-			)}
-		</div>
-	);
-}
+import Task from "./Task";
 
 export default class TasksList extends React.Component {
 	constructor(props) {
