@@ -16,6 +16,7 @@ class Login extends React.Component {
 				}}
 			>
 				<input
+					autoFocus
 					ref={e => {
 						this.input = e;
 					}}
