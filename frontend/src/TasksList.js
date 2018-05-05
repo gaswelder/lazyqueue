@@ -2,6 +2,7 @@ import React from "react";
 import foo from "./tasks.css";
 import Tasks from "./tasks";
 import Task from "./Task";
+import SyncIndicator from "./SyncIndicator";
 
 export default class TasksList extends React.Component {
 	constructor(props) {
@@ -90,7 +91,7 @@ export default class TasksList extends React.Component {
 
 		return (
 			<div className="tasks-container">
-				{this.state.saving}
+				<SyncIndicator number={this.state.saving} />
 				<h2>Active</h2>
 				{active.map((t, i) => (
 					<div key={t.id}>
