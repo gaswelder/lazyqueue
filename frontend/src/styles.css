@@ -1,10 +1,10 @@
-form {
+.loginForm {
 	padding-top: 40vh;
 	display: flex;
 	justify-content: center;
 }
 
-.logout {
+.logoutButton {
 	float: right;
 	background-color: transparent;
 	padding: 6px;

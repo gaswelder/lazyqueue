@@ -2,29 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import sha1 from "sha1";
 import TasksList from "./TasksList";
+import Login from "./Login";
 
-import styles from "./login.css";
-
-class Login extends React.Component {
-	render() {
-		return (
-			<form
-				className={styles.form}
-				onSubmit={e => {
-					e.preventDefault();
-					this.props.onSubmit(this.input.value);
-				}}
-			>
-				<input
-					autoFocus
-					ref={e => {
-						this.input = e;
-					}}
-				/>
-			</form>
-		);
-	}
-}
+import styles from "./styles.css";
 
 class App extends React.Component {
 	constructor(props) {
@@ -50,7 +30,7 @@ class App extends React.Component {
 		}
 		return (
 			<div>
-				<button className={styles.logout} onClick={this.logout}>
+				<button className={styles.logoutButton} onClick={this.logout}>
 					Logout
 				</button>
 				<TasksList userHash={this.state.userHash} />
