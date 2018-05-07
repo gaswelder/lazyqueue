@@ -16,8 +16,8 @@ class App extends React.Component {
 		this.logout = this.logout.bind(this);
 	}
 
-	login(pass) {
-		this.setState({ userHash: sha1(pass) });
+	login(user, pass) {
+		this.setState({ userHash: sha1(sha1(user) + pass) });
 	}
 
 	logout() {

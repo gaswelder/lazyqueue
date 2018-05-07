@@ -8,15 +8,24 @@ export default class Login extends React.Component {
 				className={styles.loginForm}
 				onSubmit={e => {
 					e.preventDefault();
-					this.props.onSubmit(this.input.value);
+					this.props.onSubmit(this.input.value, this.password.value);
 				}}
 			>
 				<input
+					placeholder="Username"
 					autoFocus
 					ref={e => {
 						this.input = e;
 					}}
 				/>
+				<input
+					placeholder="Password"
+					type="password"
+					ref={e => {
+						this.password = e;
+					}}
+				/>
+				<button type="submit">Enter</button>
 			</form>
 		);
 	}
