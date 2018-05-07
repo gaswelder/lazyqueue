@@ -33,8 +33,12 @@ export default class TasksList extends React.Component {
 	}
 
 	async componentDidMount() {
-		const tasks = await Tasks.get(this.props.userHash);
-		this.setState({ tasks, ready: true });
+		try {
+			const tasks = await Tasks.get(this.props.userHash);
+			this.setState({ tasks, ready: true });
+		} catch (e) {
+			alert("Failed to load the list: " + e);
+		}
 	}
 
 	moveToTop(task) {

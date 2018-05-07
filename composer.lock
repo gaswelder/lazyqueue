@@ -13,7 +13,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gaswelder/havana",
-                "reference": "f71ac8cff1ff301d4abee06e194b8057125df82e"
+                "reference": "dd32edac547608d12da248b2d24fe9cf48e4194b"
             },
             "type": "library",
             "autoload": {
@@ -25,7 +25,7 @@
                 "MIT"
             ],
             "description": "Nano-framework",
-            "time": "2018-05-01 17:32:32"
+            "time": "2018-05-07 21:02:56"
         }
     ],
     "packages-dev": [],
