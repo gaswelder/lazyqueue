@@ -59,7 +59,7 @@ export default class TasksList extends React.Component {
 		if (name === null || name.trim() == "") {
 			return;
 		}
-		const tasks = this.state.tasks.concat([Tasks.make(name)]);
+		const tasks = [Tasks.make(name)].concat(this.state.tasks);
 		this.setTasks(tasks);
 	}
 
