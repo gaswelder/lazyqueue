@@ -32,15 +32,6 @@ export default class TasksList extends React.Component {
 		);
 	}
 
-	async componentDidMount() {
-		try {
-			const tasks = await Tasks.get(this.props.userHash);
-			this.setState({ tasks, ready: true });
-		} catch (e) {
-			alert("Failed to load the list: " + e);
-		}
-	}
-
 	moveToTop(task) {
 		const tasks = [task, ...this.state.tasks.filter(t => t.id != task.id)];
 		this.setTasks(tasks);
@@ -77,6 +68,15 @@ export default class TasksList extends React.Component {
 		const restored = Object.assign({}, task, { finishedDate: null });
 		const tasks = [restored, ...this.state.tasks.filter(t => t.id != task.id)];
 		this.setTasks(tasks);
+	}
+
+	async componentDidMount() {
+		try {
+			const tasks = await Tasks.get(this.props.userHash);
+			this.setState({ tasks, ready: true });
+		} catch (e) {
+			alert("Failed to load the list: " + e);
+		}
 	}
 
 	render() {
