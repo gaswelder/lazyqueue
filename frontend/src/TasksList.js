@@ -4,6 +4,7 @@ import Tasks from "./tasks";
 import Task from "./Task";
 import SyncIndicator from "./SyncIndicator";
 import TaskView from "./TaskView";
+import Dialog from "./components/Dialog";
 
 export default class TasksList extends React.Component {
 	constructor(props) {
@@ -103,9 +104,10 @@ export default class TasksList extends React.Component {
 
 		return (
 			<div className="tasks-container">
+				<Dialog onClose={() => this.view(null)}>
+					{viewTask && <TaskView task={viewTask} />}
+				</Dialog>
 				<SyncIndicator number={this.state.saving} />
-				<TaskView task={viewTask} onClose={() => this.view(null)} />
-
 				<h2>Active</h2>
 				{active.map((t, i) => (
 					<div key={t.id}>
