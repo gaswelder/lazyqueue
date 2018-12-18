@@ -41,7 +41,7 @@ $app->post('/lists/{.+}', function ($name) {
 	}
 	$old = getData($name);
 	if ($old['version'] >= $data['version']) {
-		return response::make(409)->setContent("The given version ($data[version]) is not bigger that the saved version ($data[version])");
+		return response::make(409)->setContent("The given version ($data[version]) is not greater than the saved version ($data[version])");
 	}
 	setData($name, $data);
 });
