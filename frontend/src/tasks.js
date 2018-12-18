@@ -51,12 +51,13 @@ export default {
 		versions[id] = Math.max(versions[id], version);
 	},
 
-	make(name) {
+	make(name, description) {
 		const id =
 			Date.now().toString() + Math.round(Math.random() * 1e6).toString();
 		return {
 			id,
 			name,
+			description,
 			createdDate: new Date(),
 			finishedDate: null
 		};

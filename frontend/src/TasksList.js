@@ -16,8 +16,9 @@ class TaskForm extends React.Component {
 		const { onSave } = this.props;
 		event.preventDefault();
 		const form = event.target;
-		const name = form.querySelector("input").value;
-		onSave({ name });
+		const name = form.querySelector('[name="name"]').value;
+		const description = form.querySelector('[name="description"]').value;
+		onSave({ name, description });
 	}
 
 	render() {
@@ -26,6 +27,10 @@ class TaskForm extends React.Component {
 				<div>
 					<label>Name</label>
 					<input name="name" required />
+				</div>
+				<div>
+					<label>Description</label>
+					<textarea name="description" />
 				</div>
 				<button type="submit">Save</button>
 			</form>
@@ -77,11 +82,11 @@ export default class TasksList extends React.Component {
 	}
 
 	addTask(task) {
-		const { name } = task;
+		const { name, description } = task;
 		if (name === null || name.trim() == "") {
 			return false;
 		}
-		const tasks = [Tasks.make(name)].concat(this.state.tasks);
+		const tasks = [Tasks.make(name, description)].concat(this.state.tasks);
 		this.setTasks(tasks);
 		return true;
 	}
