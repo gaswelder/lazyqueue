@@ -6,6 +6,33 @@ import SyncIndicator from "./SyncIndicator";
 import TaskView from "./TaskView";
 import Dialog from "./components/Dialog";
 
+class TaskForm extends React.Component {
+	constructor() {
+		super();
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleSubmit(event) {
+		const { onSave } = this.props;
+		event.preventDefault();
+		const form = event.target;
+		const name = form.querySelector("input").value;
+		onSave({ name });
+	}
+
+	render() {
+		return (
+			<form onSubmit={this.handleSubmit}>
+				<div>
+					<label>Name</label>
+					<input name="name" required />
+				</div>
+				<button type="submit">Save</button>
+			</form>
+		);
+	}
+}
+
 export default class TasksList extends React.Component {
 	constructor(props) {
 		super(props);
@@ -13,7 +40,8 @@ export default class TasksList extends React.Component {
 			tasks: [],
 			ready: false,
 			saving: 0,
-			viewTask: null
+			viewTask: null,
+			create: false
 		};
 	}
 
@@ -48,13 +76,14 @@ export default class TasksList extends React.Component {
 		this.setTasks(tasks);
 	}
 
-	create() {
-		const name = prompt("");
+	addTask(task) {
+		const { name } = task;
 		if (name === null || name.trim() == "") {
-			return;
+			return false;
 		}
 		const tasks = [Tasks.make(name)].concat(this.state.tasks);
 		this.setTasks(tasks);
+		return true;
 	}
 
 	close(task) {
@@ -87,7 +116,7 @@ export default class TasksList extends React.Component {
 	}
 
 	render() {
-		const { viewTask } = this.state;
+		const { viewTask, create } = this.state;
 
 		if (!this.state.ready) {
 			return <p>Loading...</p>;
@@ -107,6 +136,15 @@ export default class TasksList extends React.Component {
 				<Dialog onClose={() => this.view(null)}>
 					{viewTask && <TaskView task={viewTask} />}
 				</Dialog>
+				<Dialog onClose={() => this.setState({ create: false })}>
+					{create && (
+						<TaskForm
+							onSave={task =>
+								this.addTask(task) && this.setState({ create: false })
+							}
+						/>
+					)}
+				</Dialog>
 				<SyncIndicator number={this.state.saving} />
 				<h2>Active</h2>
 				{active.map((t, i) => (
@@ -121,7 +159,10 @@ export default class TasksList extends React.Component {
 						/>
 					</div>
 				))}
-				<button className={foo.create} onClick={() => this.create()}>
+				<button
+					className={foo.create}
+					onClick={() => this.setState({ create: true })}
+				>
 					Create
 				</button>
 				<h2>Done</h2>
