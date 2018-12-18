@@ -9,23 +9,23 @@ import styles from "./styles.css";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			userHash: null
-		};
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
 	}
 
 	login(user, pass) {
-		this.setState({ userHash: sha1(sha1(user) + pass) });
+		localStorage.setItem("userHash", sha1(sha1(user) + pass));
+		this.forceUpdate();
 	}
 
 	logout() {
-		this.setState({ userHash: null });
+		localStorage.removeItem("userHash");
+		this.forceUpdate();
 	}
 
 	render() {
-		if (!this.state.userHash) {
+		const userHash = localStorage.getItem("userHash");
+		if (!userHash) {
 			return <Login onSubmit={this.login} />;
 		}
 		return (
@@ -33,7 +33,7 @@ class App extends React.Component {
 				<button className={styles.logoutButton} onClick={this.logout}>
 					Logout
 				</button>
-				<TasksList userHash={this.state.userHash} />
+				<TasksList userHash={userHash} />
 			</div>
 		);
 	}
