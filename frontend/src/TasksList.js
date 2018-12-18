@@ -3,6 +3,7 @@ import foo from "./tasks.css";
 import Tasks from "./tasks";
 import Task from "./Task";
 import SyncIndicator from "./SyncIndicator";
+import TaskView from "./TaskView";
 
 export default class TasksList extends React.Component {
 	constructor(props) {
@@ -10,7 +11,8 @@ export default class TasksList extends React.Component {
 		this.state = {
 			tasks: [],
 			ready: false,
-			saving: 0
+			saving: 0,
+			viewTask: null
 		};
 	}
 
@@ -79,7 +81,13 @@ export default class TasksList extends React.Component {
 		}
 	}
 
+	view(viewTask) {
+		this.setState({ viewTask });
+	}
+
 	render() {
+		const { viewTask } = this.state;
+
 		if (!this.state.ready) {
 			return <p>Loading...</p>;
 		}
@@ -96,6 +104,8 @@ export default class TasksList extends React.Component {
 		return (
 			<div className="tasks-container">
 				<SyncIndicator number={this.state.saving} />
+				<TaskView task={viewTask} onClose={() => this.view(null)} />
+
 				<h2>Active</h2>
 				{active.map((t, i) => (
 					<div key={t.id}>
@@ -105,6 +115,7 @@ export default class TasksList extends React.Component {
 							onTopClick={() => this.moveToTop(t)}
 							onRemoveClick={() => this.remove(t)}
 							onDoneClick={() => this.close(t)}
+							onOpen={() => this.view(t)}
 						/>
 					</div>
 				))}
