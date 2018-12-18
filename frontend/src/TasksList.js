@@ -3,7 +3,6 @@ import foo from "./tasks.css";
 import Tasks from "./tasks";
 import Task from "./Task";
 import SyncIndicator from "./SyncIndicator";
-import TaskView from "./TaskView";
 import Dialog from "./components/Dialog";
 
 class TaskForm extends React.Component {
@@ -13,24 +12,25 @@ class TaskForm extends React.Component {
 	}
 
 	handleSubmit(event) {
-		const { onSave } = this.props;
+		const { onSave, task = {} } = this.props;
 		event.preventDefault();
 		const form = event.target;
 		const name = form.querySelector('[name="name"]').value;
 		const description = form.querySelector('[name="description"]').value;
-		onSave({ name, description });
+		onSave({ id: task.id, name, description });
 	}
 
 	render() {
+		const { name, description } = this.props.task || {};
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<div>
 					<label>Name</label>
-					<input name="name" required />
+					<input name="name" required defaultValue={name} />
 				</div>
 				<div>
 					<label>Description</label>
-					<textarea name="description" />
+					<textarea name="description" defaultValue={description} />
 				</div>
 				<button type="submit">Save</button>
 			</form>
@@ -91,6 +91,17 @@ export default class TasksList extends React.Component {
 		return true;
 	}
 
+	updateTask(updatedTask) {
+		this.setState(function(state) {
+			return {
+				tasks: state.tasks.map(t =>
+					t.id == updatedTask.id ? Object.assign({}, t, updatedTask) : t
+				)
+			};
+		}, this.save);
+		return true;
+	}
+
 	close(task) {
 		const tasks = this.state.tasks.map(function(t) {
 			if (t.id == task.id) {
@@ -139,7 +150,12 @@ export default class TasksList extends React.Component {
 		return (
 			<div className="tasks-container">
 				<Dialog onClose={() => this.view(null)}>
-					{viewTask && <TaskView task={viewTask} />}
+					{viewTask && (
+						<TaskForm
+							task={viewTask}
+							onSave={task => this.updateTask(task) && this.view(null)}
+						/>
+					)}
 				</Dialog>
 				<Dialog onClose={() => this.setState({ create: false })}>
 					{create && (
