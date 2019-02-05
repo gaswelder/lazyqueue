@@ -3,15 +3,18 @@
 	left: 1em;
 	top: 100%;
 	right: 1em;
+	max-width: 50em;
+	margin: auto;
 	background: white;
 	box-shadow: black 1px 1px 5px;
 	padding: 1em;
 	z-index: 1;
 	color: black;
 	transition: top 0.1s;
-	height: 90vh;
+	height: 60vh;
 	display: flex;
 	flex-direction: column;
+	border-radius: 2px;
 }
 
 .container.open {
