@@ -13,12 +13,14 @@ function IconButton(props) {
 }
 
 export default function Task(props) {
-	const { onOpen } = props;
+	const { onOpen, onTopClick, onDownClick } = props;
+
 	return (
 		<div className={styles.task + (props.first ? " " + styles.first : "")}>
 			{!props.first && props.onTopClick && (
-				<IconButton text="▲" onClick={props.onTopClick} />
+				<IconButton text="▲" onClick={onTopClick} />
 			)}
+			<IconButton text="▼" onClick={onDownClick} />
 			<span onClick={onOpen}>{props.name}</span>
 			{props.onDoneClick && (
 				<IconButton

@@ -55,6 +55,13 @@ export default class TasksList extends React.Component {
 		this.setTasks(newList);
 	}
 
+	moveToBottom(task) {
+		const { tasks } = this.state;
+
+		const rest = tasks.filter(t => t.id != task.id);
+		this.setTasks([...rest, task]);
+	}
+
 	remove(task) {
 		if (!confirm(`This will remove task "${task.name}"`)) {
 			return;
@@ -156,6 +163,7 @@ export default class TasksList extends React.Component {
 							first={i == 0}
 							name={t.name}
 							onTopClick={() => this.moveToTop(t)}
+							onDownClick={() => this.moveToBottom(t)}
 							onRemoveClick={() => this.remove(t)}
 							onDoneClick={() => this.close(t)}
 							onOpen={() => this.view(t)}
