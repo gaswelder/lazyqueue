@@ -37,8 +37,22 @@ export default class TasksList extends React.Component {
 	}
 
 	moveToTop(task) {
-		const tasks = [task, ...this.state.tasks.filter(t => t.id != task.id)];
-		this.setTasks(tasks);
+		const { tasks } = this.state;
+
+		// If there are one or zero tasks, nothing to do.
+		if (tasks.length < 2) {
+			return;
+		}
+
+		// Move task in the second place (keeping the top task intact),
+		// unless the task is in the second place already. If it's in the
+		// second place, put it in the first place.
+		const isSecond = tasks.findIndex(t => t.id == task.id) == 1;
+		const rest = tasks.filter(t => t.id != task.id);
+		const newList = isSecond
+			? [task, ...rest]
+			: [rest[0], task, ...rest.slice(1)];
+		this.setTasks(newList);
 	}
 
 	remove(task) {
