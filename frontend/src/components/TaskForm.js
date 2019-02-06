@@ -23,7 +23,7 @@ class TaskForm extends React.Component {
 		return (
 			<form onSubmit={this.handleSubmit} className={classes.form}>
 				<label>Name</label>
-				<input name="name" required defaultValue={name} />
+				<input name="name" required defaultValue={name} autoFocus />
 
 				<label>Description</label>
 				<textarea name="description" defaultValue={description} />
