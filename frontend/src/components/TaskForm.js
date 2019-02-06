@@ -18,6 +18,8 @@ class TaskForm extends React.Component {
 
 	render() {
 		const { name, description } = this.props.task || {};
+		const { onCancel } = this.props;
+
 		return (
 			<form onSubmit={this.handleSubmit} className={classes.form}>
 				<label>Name</label>
@@ -26,7 +28,12 @@ class TaskForm extends React.Component {
 				<label>Description</label>
 				<textarea name="description" defaultValue={description} />
 
-				<button type="submit">Save</button>
+				<div className={classes.footer}>
+					<button type="button" onClick={onCancel}>
+						Close
+					</button>
+					<button type="submit">Save</button>
+				</div>
 			</form>
 		);
 	}

@@ -14,6 +14,7 @@ export default class TasksList extends React.Component {
 			ready: false,
 			saving: 0,
 			viewTask: null,
+			viewTaskShow: false,
 			create: false
 		};
 	}
@@ -116,12 +117,24 @@ export default class TasksList extends React.Component {
 		}
 	}
 
+	/**
+	 * Shows the given task in the dialog.
+	 * If task is null, hides the dialog.
+	 *
+	 * @param {task} viewTask
+	 */
 	view(viewTask) {
-		this.setState({ viewTask });
+		if (viewTask) {
+			this.setState({ create: null, viewTask, viewTaskShow: true });
+		} else {
+			// Hide the dialog, but don't remove the task so that
+			// the dialog can animate away nicely.
+			this.setState({ viewTaskShow: false });
+		}
 	}
 
 	render() {
-		const { viewTask, create } = this.state;
+		const { viewTask, viewTaskShow, create } = this.state;
 
 		if (!this.state.ready) {
 			return <p>Loading...</p>;
@@ -138,23 +151,28 @@ export default class TasksList extends React.Component {
 
 		return (
 			<div className="tasks-container">
-				<Dialog onClose={() => this.view(null)}>
+				<Dialog show={viewTaskShow}>
 					{viewTask && (
 						<TaskForm
+							key={viewTask.id}
 							task={viewTask}
 							onSave={task => this.updateTask(task) && this.view(null)}
+							onCancel={() => this.view(null)}
 						/>
 					)}
 				</Dialog>
-				<Dialog onClose={() => this.setState({ create: false })}>
+
+				<Dialog show={create}>
 					{create && (
 						<TaskForm
 							onSave={task =>
 								this.addTask(task) && this.setState({ create: false })
 							}
+							onCancel={() => this.setState({ create: false })}
 						/>
 					)}
 				</Dialog>
+
 				<SyncIndicator number={this.state.saving} />
 				<h2>Active</h2>
 				{active.map((t, i) => (
@@ -172,7 +190,7 @@ export default class TasksList extends React.Component {
 				))}
 				<button
 					className={foo.create}
-					onClick={() => this.setState({ create: true })}
+					onClick={() => this.setState({ viewTaskShow: null, create: true })}
 				>
 					Create
 				</button>

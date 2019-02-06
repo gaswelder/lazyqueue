@@ -2,20 +2,12 @@ import React from "react";
 import classes from "./Dialog.css";
 
 function Dialog(props) {
-	const { children, onClose } = props;
-	if (!children) {
-		return <div className={classes.container} />;
-	}
-	return (
-		<div className={[classes.container, classes.open].join(" ")}>
-			{children}
-			<div className={classes.footer}>
-				<button type="button" onClick={onClose}>
-					Close
-				</button>
-			</div>
-		</div>
-	);
+	const { children, show } = props;
+
+	const className = [classes.container, show && classes.open]
+		.filter(Boolean)
+		.join(" ");
+	return <div className={className}>{children}</div>;
 }
 
 export default Dialog;

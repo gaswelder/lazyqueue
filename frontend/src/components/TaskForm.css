@@ -16,3 +16,11 @@
 .form button {
 	margin-top: auto;
 }
+
+.footer {
+	display: flex;
+}
+
+.footer button {
+	flex: 1;
+}
