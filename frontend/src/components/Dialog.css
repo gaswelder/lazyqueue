@@ -3,7 +3,7 @@
 	left: 1em;
 	top: 100%;
 	right: 1em;
-	max-width: 50em;
+	max-width: 40em;
 	margin: auto;
 	background: white;
 	box-shadow: black 1px 1px 5px;
@@ -11,14 +11,15 @@
 	z-index: 1;
 	color: black;
 	transition: top 0.1s;
-	height: 60vh;
+	max-height: 60vh;
 	display: flex;
 	flex-direction: column;
 	border-radius: 2px;
 }
 
 .container.open {
-	top: 1em;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .container > :first-child {
