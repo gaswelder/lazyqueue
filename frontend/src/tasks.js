@@ -35,7 +35,7 @@ export default {
 		};
 
 		const r = await fetch("/lists/" + id, {
-			method: "POST",
+			method: "PUT",
 			body: JSON.stringify(data),
 			headers: {
 				"Content-Type": "application/json"

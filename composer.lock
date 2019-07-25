@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4c3d37e0fb3d828f65ac70c24d3c6776",
     "content-hash": "a13461698892c446c1e36eeee4d33d55",
     "packages": [
         {
@@ -13,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gaswelder/havana",
-                "reference": "dd32edac547608d12da248b2d24fe9cf48e4194b"
+                "reference": "70508317d3ebe0092f6018fe2b75831ba4b6f9ad"
             },
             "type": "library",
             "autoload": {
@@ -25,7 +24,7 @@
                 "MIT"
             ],
             "description": "Nano-framework",
-            "time": "2018-05-07 21:02:56"
+            "time": "2019-07-25T22:48:04+00:00"
         }
     ],
     "packages-dev": [],
