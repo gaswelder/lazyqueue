@@ -11,7 +11,10 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: "babel-loader",
 				options: {
-					presets: ["react", "es2017"]
+					presets: [
+						"@babel/react",
+						["@babel/preset-env", { targets: "since 2019" }]
+					]
 				}
 			},
 			{
