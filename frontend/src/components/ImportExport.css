@@ -1,0 +1,9 @@
+.importExport {
+	text-align: right;
+}
+.importExport a {
+	color: #ddd;
+	text-decoration: none;
+	font-size: smaller;
+	margin-right: 0.5em;
+}

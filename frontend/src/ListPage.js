@@ -4,6 +4,7 @@ import SyncIndicator from "./SyncIndicator";
 import Dialog from "./components/Dialog";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
+import ImportExport from "./components/ImportExport";
 
 export default class ListPage extends React.Component {
 	constructor(props) {
@@ -114,6 +115,12 @@ export default class ListPage extends React.Component {
 				</Dialog>
 
 				<SyncIndicator number={this.state.saving} />
+				<ImportExport
+					listID={this.props.userHash}
+					onChange={tasks => {
+						this.setTasks(tasks);
+					}}
+				/>
 				<TaskList
 					tasks={this.state.tasks}
 					onChange={tasks => {

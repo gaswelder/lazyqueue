@@ -63,8 +63,28 @@ export default {
 		};
 	},
 
+	parseDump(string) {
+		let data;
+		try {
+			data = JSON.parse(string);
+		} catch (e) {
+			return null;
+		}
+		if (!data.list || !data.version) {
+			return null;
+		}
+		return {
+			version: data.version,
+			list: data.list.map(parse)
+		};
+	},
+
+	link(id) {
+		return "/lists/" + id;
+	},
+
 	get(id) {
-		return fetch("/lists/" + id)
+		return fetch(this.link(id))
 			.then(r => r.json())
 			.then(function(data) {
 				versions[id] = data.version;
