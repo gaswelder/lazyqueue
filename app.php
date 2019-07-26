@@ -1,12 +1,10 @@
 <?php
 require 'vendor/autoload.php';
-// require '/home/gas/code/pub/havana/main.php';
 
 use havana\App;
 use havana\request;
 use havana\response;
 use Aws\S3\S3Client;
-use Aws\Exception\AwsException;
 
 $app = new App(__DIR__);
 
@@ -23,7 +21,6 @@ class S3KindaStorage implements Storage
 		$key_id = getenv('CLOUDCUBE_ACCESS_KEY_ID');
 		$key = getenv('CLOUDCUBE_SECRET_ACCESS_KEY');
 		return new S3Client([
-			'profile' => 'default',
 			'version' => 'latest',
 			'region' => 'eu-west-1',
 			'endpoint' => 'https://s3.amazonaws.com',
@@ -45,19 +42,20 @@ class S3KindaStorage implements Storage
 
 	function read($name)
 	{
-		$result = $this->s3()->getObject([
-			'Bucket' => 'cloud-cube-eu',
-			'Key' => $this->dir() . '/' . $name
-		]);
-
-		// if (!file_exists($path)) {
-		// 	return ['version' => 0, 'list' => []];
-		// }
-		return json_decode($result['Body']);
+		try {
+			$result = $this->s3()->getObject([
+				'Bucket' => 'cloud-cube-eu',
+				'Key' => $this->dir() . '/' . $name
+			]);
+			return json_decode($result['Body'], true);
+		} catch (Aws\S3\Exception\S3Exception $e) {
+			if ($e->getStatusCode() != 404) {
+				throw $e;
+			}
+			return ['version' => 0, 'list' => []];
+		}
 	}
 }
-
-
 
 interface Storage
 {
