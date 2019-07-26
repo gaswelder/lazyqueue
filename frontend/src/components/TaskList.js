@@ -4,6 +4,7 @@ import Task from "../Task";
 
 export default function TaskList(props) {
 	const { tasks, onChange, onView } = props;
+	const [tab, setTab] = React.useState(0);
 
 	const [active, done] = tasks.reduce(
 		function(s, task) {
@@ -62,36 +63,59 @@ export default function TaskList(props) {
 
 	return (
 		<React.Fragment>
-			<h2>Active</h2>
-			{active.map((t, i) => (
-				<div key={t.id}>
-					<Task
-						first={i == 0}
-						name={t.name}
-						onTopClick={() => moveToTop(t)}
-						onDownClick={() => moveToBottom(t)}
-						onRemoveClick={() => remove(t)}
-						onDoneClick={() => close(t)}
-						onOpen={() => onView(t)}
-					/>
-				</div>
-			))}
+			<div className={foo.tabs}>
+				<a
+					href="#"
+					onClick={() => setTab(0)}
+					className={tab == 0 ? foo.current : ""}
+				>
+					Active ({active.length})
+				</a>
+				<a
+					href="#"
+					onClick={() => setTab(1)}
+					className={tab == 1 ? foo.current : ""}
+				>
+					Done ({done.length})
+				</a>
+			</div>
+			{tab === 0 && (
+				<React.Fragment>
+					{active.map((t, i) => (
+						<div key={t.id}>
+							<Task
+								first={i == 0}
+								name={t.name}
+								onTopClick={() => moveToTop(t)}
+								onDownClick={() => moveToBottom(t)}
+								onRemoveClick={() => remove(t)}
+								onDoneClick={() => close(t)}
+								onOpen={() => onView(t)}
+							/>
+						</div>
+					))}
+				</React.Fragment>
+			)}
+			{tab === 1 && (
+				<React.Fragment>
+					{done.map(t => (
+						<div key={t.id}>
+							<Task
+								name={t.name}
+								onRemoveClick={() => remove(t)}
+								onTopClick={() => open(t)}
+							/>
+						</div>
+					))}
+				</React.Fragment>
+			)}
+
 			<button
 				className={foo.create}
 				onClick={() => this.setState({ viewTaskShow: null, create: true })}
 			>
 				Create
 			</button>
-			<h2>Done</h2>
-			{done.map(t => (
-				<div key={t.id}>
-					<Task
-						name={t.name}
-						onRemoveClick={() => remove(t)}
-						onTopClick={() => open(t)}
-					/>
-				</div>
-			))}
 		</React.Fragment>
 	);
 }
