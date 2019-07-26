@@ -1,11 +1,63 @@
 <?php
 require 'vendor/autoload.php';
+// require '/home/gas/code/pub/havana/main.php';
 
 use havana\App;
 use havana\request;
 use havana\response;
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
 
 $app = new App(__DIR__);
+
+class S3KindaStorage implements Storage
+{
+	private function dir()
+	{
+		// https://cloud-cube-eu.s3.amazonaws.com/abcdefgh
+		return basename(getenv('CLOUDCUBE_URL'));
+	}
+
+	private function s3()
+	{
+		$key_id = getenv('CLOUDCUBE_ACCESS_KEY_ID');
+		$key = getenv('CLOUDCUBE_SECRET_ACCESS_KEY');
+		return new S3Client([
+			'profile' => 'default',
+			'version' => 'latest',
+			'region' => 'eu-west-1',
+			'endpoint' => 'https://s3.amazonaws.com',
+			'credentials' => [
+				'key'    => $key_id,
+				'secret' => $key,
+			],
+		]);
+	}
+
+	function write($name, $data)
+	{
+		$result = $this->s3()->putObject([
+			'Bucket' => 'cloud-cube-eu',
+			'Key' => $this->dir() . '/' . $name,
+			'Body' => json_encode($data)
+		]);
+	}
+
+	function read($name)
+	{
+		$result = $this->s3()->getObject([
+			'Bucket' => 'cloud-cube-eu',
+			'Key' => $this->dir() . '/' . $name
+		]);
+
+		// if (!file_exists($path)) {
+		// 	return ['version' => 0, 'list' => []];
+		// }
+		return json_decode($result['Body']);
+	}
+}
+
+
 
 interface Storage
 {
@@ -65,8 +117,13 @@ class Lists
 		$this->storage->write($name, $data);
 	}
 }
-
-$storage = new FileStorage();
+if (getenv('CLOUDCUBE_ACCESS_KEY_ID')) {
+	error_log("Using S3 storage");
+	$storage = new S3KindaStorage();
+} else {
+	error_log("Using file storage");
+	$storage = new FileStorage();
+}
 
 $app->mount('/lists', '{.+}', new Lists($storage));
 $app->get('/', function () {

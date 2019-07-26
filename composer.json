@@ -6,6 +6,7 @@
     }
   ],
   "require": {
-    "gaswelder/havana": "dev-master"
+    "gaswelder/havana": "dev-master",
+    "aws/aws-sdk-php": "^3.107"
   }
 }
