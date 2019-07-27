@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Task.css";
+import Tag from "./Tag";
 
 function IconButton(props) {
 	const className = [classes["icon-button"], props.className]
@@ -30,15 +31,13 @@ export default function Task(props) {
 			<IconButton text="▼" onClick={onDownClick} />
 			<span onClick={onOpen}>
 				{task.tag && (
-					<span
-						className={classes.tag}
+					<Tag
+						title={task.tag}
 						onClick={e => {
 							e.stopPropagation();
 							onTagClick();
 						}}
-					>
-						{task.tag}
-					</span>
+					/>
 				)}
 				{task.name}
 				{task.description && <span className={classes.more}>...</span>}
