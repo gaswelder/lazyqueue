@@ -1,6 +1,6 @@
 import React from "react";
-import foo from "../tasks.css";
-import Task from "../Task";
+import foo from "./tasks.css";
+import Task from "./Task";
 
 export default function TaskList(props) {
 	const { tasks, onChange, onView } = props;

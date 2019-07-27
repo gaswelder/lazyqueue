@@ -1,10 +1,10 @@
 import React from "react";
-import Tasks from "./tasks";
+import Tasks from "../tasks";
 import SyncIndicator from "./SyncIndicator";
-import Dialog from "./components/Dialog";
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
-import ImportExport from "./components/ImportExport";
+import Dialog from "../components/Dialog";
+import TaskForm from "./TaskForm";
+import TaskList from "./TaskList";
+import ImportExport from "./ImportExport";
 
 export default class ListPage extends React.Component {
 	constructor(props) {

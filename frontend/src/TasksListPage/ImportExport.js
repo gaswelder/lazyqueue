@@ -1,6 +1,6 @@
 import React from "react";
 import Tasks from "../tasks";
-import Dialog from "./Dialog";
+import Dialog from "../components/Dialog";
 import classes from "./ImportExport.css";
 
 function ImportForm(props) {

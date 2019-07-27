@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import sha1 from "sha1";
-import ListPage from "./ListPage";
+import ListPage from "./TasksListPage";
 import LoginPage from "./LoginPage";
 import styles from "./styles.css";
 
