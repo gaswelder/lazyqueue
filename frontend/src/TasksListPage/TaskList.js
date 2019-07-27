@@ -5,6 +5,7 @@ import Task from "./Task";
 export default function TaskList(props) {
 	const { tasks, onChange, onView } = props;
 	const [tab, setTab] = React.useState(0);
+	const [tag, setTag] = React.useState(null);
 
 	const [active, done] = tasks.reduce(
 		function(s, task) {
@@ -15,6 +16,11 @@ export default function TaskList(props) {
 		},
 		[[], []]
 	);
+
+	const handleTabClick = i => {
+		setTab(i);
+		setTag(null);
+	};
 
 	const moveToTop = task => {
 		// If there are one or zero tasks, nothing to do.
@@ -66,20 +72,25 @@ export default function TaskList(props) {
 			<div className={foo.tabs}>
 				<a
 					href="#"
-					onClick={() => setTab(0)}
-					className={tab == 0 ? foo.current : ""}
+					onClick={() => handleTabClick(0)}
+					className={tab == 0 && !tag ? foo.current : ""}
 				>
 					Active ({active.length})
 				</a>
 				<a
 					href="#"
-					onClick={() => setTab(1)}
-					className={tab == 1 ? foo.current : ""}
+					onClick={() => handleTabClick(1)}
+					className={tab == 1 && !tag ? foo.current : ""}
 				>
 					Done ({done.length})
 				</a>
+				{tag && (
+					<a href="#" className={foo.current}>
+						{tag} ({active.filter(t => t.tag == tag).length})
+					</a>
+				)}
 			</div>
-			{tab === 0 && (
+			{tab === 0 && !tag && (
 				<React.Fragment>
 					{active.map((t, i) => (
 						<div key={t.id}>
@@ -91,12 +102,13 @@ export default function TaskList(props) {
 								onRemoveClick={() => remove(t)}
 								onDoneClick={() => close(t)}
 								onOpen={() => onView(t)}
+								onTagClick={() => setTag(t.tag)}
 							/>
 						</div>
 					))}
 				</React.Fragment>
 			)}
-			{tab === 1 && (
+			{tab === 1 && !tag && (
 				<React.Fragment>
 					{done.map(t => (
 						<div key={t.id}>
@@ -107,6 +119,26 @@ export default function TaskList(props) {
 							/>
 						</div>
 					))}
+				</React.Fragment>
+			)}
+			{tag && (
+				<React.Fragment>
+					{active
+						.filter(t => t.tag == tag)
+						.map((t, i) => (
+							<div key={t.id}>
+								<Task
+									first={i == 0}
+									task={t}
+									onTopClick={() => moveToTop(t)}
+									onDownClick={() => moveToBottom(t)}
+									onRemoveClick={() => remove(t)}
+									onDoneClick={() => close(t)}
+									onOpen={() => onView(t)}
+									onTagClick={() => setTag(t.tag)}
+								/>
+							</div>
+						))}
 				</React.Fragment>
 			)}
 		</React.Fragment>

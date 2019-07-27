@@ -15,6 +15,7 @@ function IconButton(props) {
 export default function Task(props) {
 	const {
 		onOpen,
+		onTagClick,
 		onTopClick,
 		onDownClick,
 		onDoneClick,
@@ -28,7 +29,17 @@ export default function Task(props) {
 			{!first && onTopClick && <IconButton text="▲" onClick={onTopClick} />}
 			<IconButton text="▼" onClick={onDownClick} />
 			<span onClick={onOpen}>
-				{task.tag && <span className={classes.tag}>{task.tag}</span>}
+				{task.tag && (
+					<span
+						className={classes.tag}
+						onClick={e => {
+							e.stopPropagation();
+							onTagClick();
+						}}
+					>
+						{task.tag}
+					</span>
+				)}
 				{task.name}
 				{task.description && <span className={classes.more}>...</span>}
 			</span>
