@@ -109,13 +109,6 @@ export default function TaskList(props) {
 					))}
 				</React.Fragment>
 			)}
-
-			<button
-				className={foo.create}
-				onClick={() => this.setState({ viewTaskShow: null, create: true })}
-			>
-				Create
-			</button>
 		</React.Fragment>
 	);
 }

@@ -5,6 +5,7 @@ import Dialog from "../components/Dialog";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import ImportExport from "./ImportExport";
+import classes from "./index.css";
 
 export default class ListPage extends React.Component {
 	constructor(props) {
@@ -128,6 +129,12 @@ export default class ListPage extends React.Component {
 					}}
 					onView={t => this.view(t)}
 				/>
+				<button
+					className={classes.createButton}
+					onClick={() => this.setState({ viewTaskShow: null, create: true })}
+				>
+					+
+				</button>
 			</div>
 		);
 	}
