@@ -27,6 +27,19 @@
 	text-overflow: ellipsis;
 }
 
+.task > span.tag {
+	display: inline-block;
+	background-color: #9fa8da;
+	color: white;
+	font-size: small;
+	font-weight: bold;
+	padding: 0.2em 0.5em;
+	margin-right: 0.5em;
+	border-radius: 4px;
+	flex-grow: 0;
+	flex-basis: auto;
+}
+
 .icon-button {
 	border: none;
 	background: transparent;

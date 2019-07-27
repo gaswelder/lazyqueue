@@ -13,27 +13,30 @@ function IconButton(props) {
 }
 
 export default function Task(props) {
-	const { onOpen, onTopClick, onDownClick } = props;
+	const {
+		onOpen,
+		onTopClick,
+		onDownClick,
+		onDoneClick,
+		onRemoveClick,
+		task,
+		first
+	} = props;
 
 	return (
-		<div className={styles.task + (props.first ? " " + styles.first : "")}>
-			{!props.first && props.onTopClick && (
-				<IconButton text="▲" onClick={onTopClick} />
-			)}
+		<div className={styles.task + (first ? " " + styles.first : "")}>
+			{!first && onTopClick && <IconButton text="▲" onClick={onTopClick} />}
 			<IconButton text="▼" onClick={onDownClick} />
-			<span onClick={onOpen}>{props.name}</span>
-			{props.onDoneClick && (
-				<IconButton
-					className={styles.check}
-					text="✓"
-					onClick={props.onDoneClick}
-				/>
+			{task.tag && <span className={styles.tag}>{task.tag}</span>}
+			<span onClick={onOpen}>{task.name}</span>
+			{onDoneClick && (
+				<IconButton className={styles.check} text="✓" onClick={onDoneClick} />
 			)}
-			{props.onRemoveClick && (
+			{onRemoveClick && (
 				<IconButton
 					className={styles.delete}
 					text="×"
-					onClick={props.onRemoveClick}
+					onClick={onRemoveClick}
 				/>
 			)}
 		</div>

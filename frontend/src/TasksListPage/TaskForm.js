@@ -11,22 +11,25 @@ class TaskForm extends React.Component {
 		const { onSave, task = {} } = this.props;
 		event.preventDefault();
 		const form = event.target;
+		const tag = form.querySelector('[name="tag"]').value;
 		const name = form.querySelector('[name="name"]').value;
 		const description = form.querySelector('[name="description"]').value;
-		onSave({ id: task.id, name, description });
+		onSave({ id: task.id, name, description, tag });
 	}
 
 	render() {
-		const { name, description } = this.props.task || {};
-		const { onCancel } = this.props;
+		const { task = {}, onCancel } = this.props;
 
 		return (
 			<form onSubmit={this.handleSubmit} className={classes.form}>
+				<label>Tag</label>
+				<input name="tag" defaultValue={task.tag} />
+
 				<label>Name</label>
-				<input name="name" required defaultValue={name} autoFocus />
+				<input name="name" required defaultValue={task.name} autoFocus />
 
 				<label>Description</label>
-				<textarea name="description" defaultValue={description} />
+				<textarea name="description" defaultValue={task.description} />
 
 				<div className={classes.footer}>
 					<button type="button" onClick={onCancel}>

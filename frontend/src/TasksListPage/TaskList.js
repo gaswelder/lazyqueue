@@ -85,7 +85,7 @@ export default function TaskList(props) {
 						<div key={t.id}>
 							<Task
 								first={i == 0}
-								name={t.name}
+								task={t}
 								onTopClick={() => moveToTop(t)}
 								onDownClick={() => moveToBottom(t)}
 								onRemoveClick={() => remove(t)}
@@ -101,7 +101,7 @@ export default function TaskList(props) {
 					{done.map(t => (
 						<div key={t.id}>
 							<Task
-								name={t.name}
+								task={t}
 								onRemoveClick={() => remove(t)}
 								onTopClick={() => open(t)}
 							/>
