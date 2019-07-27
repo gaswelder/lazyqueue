@@ -23,10 +23,16 @@ class TaskForm extends React.Component {
 		return (
 			<form onSubmit={this.handleSubmit} className={classes.form}>
 				<label>Tag</label>
-				<input name="tag" defaultValue={task.tag} />
+				<input name="tag" defaultValue={task.tag} autoComplete="off" />
 
 				<label>Name</label>
-				<input name="name" required defaultValue={task.name} autoFocus />
+				<input
+					name="name"
+					required
+					defaultValue={task.name}
+					autoFocus
+					autoComplete="off"
+				/>
 
 				<label>Description</label>
 				<textarea name="description" defaultValue={task.description} />
