@@ -126,7 +126,7 @@ export default class ListPage extends React.Component {
 					onChange={tasks => {
 						this.setTasks(tasks);
 					}}
-					onView={this.view}
+					onView={t => this.view(t)}
 				/>
 			</div>
 		);
