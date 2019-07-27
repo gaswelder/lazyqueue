@@ -27,7 +27,7 @@
 	text-overflow: ellipsis;
 }
 
-.task > span.tag {
+.tag {
 	display: inline-block;
 	background-color: #9fa8da;
 	color: white;
@@ -38,6 +38,16 @@
 	border-radius: 4px;
 	flex-grow: 0;
 	flex-basis: auto;
+}
+
+.more {
+	font-weight: bold;
+	background-color: #ccc;
+	border-radius: 2px;
+	display: inline-block;
+	padding: 0 0.1em;
+	margin-left: 0.5em;
+	font-size: smaller;
 }
 
 .icon-button {

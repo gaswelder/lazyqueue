@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./Task.css";
+import classes from "./Task.css";
 
 function IconButton(props) {
-	const className = [styles["icon-button"], props.className]
+	const className = [classes["icon-button"], props.className]
 		.filter(x => x)
 		.join(" ");
 	return (
@@ -24,17 +24,20 @@ export default function Task(props) {
 	} = props;
 
 	return (
-		<div className={styles.task + (first ? " " + styles.first : "")}>
+		<div className={classes.task + (first ? " " + classes.first : "")}>
 			{!first && onTopClick && <IconButton text="▲" onClick={onTopClick} />}
 			<IconButton text="▼" onClick={onDownClick} />
-			{task.tag && <span className={styles.tag}>{task.tag}</span>}
-			<span onClick={onOpen}>{task.name}</span>
+			<span onClick={onOpen}>
+				{task.tag && <span className={classes.tag}>{task.tag}</span>}
+				{task.name}
+				{task.description && <span className={classes.more}>...</span>}
+			</span>
 			{onDoneClick && (
-				<IconButton className={styles.check} text="✓" onClick={onDoneClick} />
+				<IconButton className={classes.check} text="✓" onClick={onDoneClick} />
 			)}
 			{onRemoveClick && (
 				<IconButton
-					className={styles.delete}
+					className={classes.delete}
 					text="×"
 					onClick={onRemoveClick}
 				/>
