@@ -39,11 +39,11 @@ export default class ListPage extends React.Component {
 	}
 
 	addTask(task) {
-		const { name, description } = task;
+		const { name, description, tag } = task;
 		if (name === null || name.trim() == "") {
 			return false;
 		}
-		const tasks = [Tasks.make(name, description)].concat(this.state.tasks);
+		const tasks = [Tasks.make(name, description, tag)].concat(this.state.tasks);
 		this.setTasks(tasks);
 		return true;
 	}
