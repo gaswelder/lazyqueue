@@ -7,6 +7,33 @@ import TaskList from "./TaskList";
 import ImportExport from "./ImportExport";
 import classes from "./index.css";
 
+function Hotkey(props) {
+	const { filter, func } = props;
+
+	const matchesFilter = (filter, event) => {
+		for (const [k, v] of Object.entries(filter)) {
+			if (event[k] != v) {
+				return false;
+			}
+		}
+		return true;
+	};
+
+	React.useEffect(() => {
+		const listener = event => {
+			if (matchesFilter(filter, event)) {
+				func(event);
+			}
+		};
+		window.addEventListener("keyup", listener);
+		return () => {
+			window.removeEventListener("keyup", listener);
+		};
+	}, [filter]);
+
+	return null;
+}
+
 export default class ListPage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -91,6 +118,14 @@ export default class ListPage extends React.Component {
 			return <p>Loading...</p>;
 		}
 
+		const handleCreateClick = () =>
+			this.setState({ viewTaskShow: null, create: true });
+
+		const closeModals = () => {
+			this.setState({ create: false });
+			this.view(null);
+		};
+
 		return (
 			<div className="tasks-container">
 				<Dialog show={viewTaskShow}>
@@ -129,12 +164,14 @@ export default class ListPage extends React.Component {
 					}}
 					onView={t => this.view(t)}
 				/>
-				<button
-					className={classes.createButton}
-					onClick={() => this.setState({ viewTaskShow: null, create: true })}
-				>
+				<button className={classes.createButton} onClick={handleCreateClick}>
 					+
 				</button>
+				<Hotkey
+					filter={{ shiftKey: true, key: "+" }}
+					func={handleCreateClick}
+				/>
+				<Hotkey filter={{ key: "Escape" }} func={closeModals} />
 			</div>
 		);
 	}
