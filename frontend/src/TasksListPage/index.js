@@ -7,6 +7,10 @@ import TaskList from "./TaskList";
 import ImportExport from "./ImportExport";
 import classes from "./index.css";
 
+const unique = xs => [...new Set(xs)];
+const getAllTags = tasks =>
+	unique(tasks.map(t => t.tag).filter(t => t != undefined && t != ""));
+
 function Hotkey(props) {
 	const { filter, func } = props;
 
@@ -112,7 +116,7 @@ export default class ListPage extends React.Component {
 	}
 
 	render() {
-		const { viewTask, viewTaskShow, create } = this.state;
+		const { viewTask, viewTaskShow, create, tasks } = this.state;
 
 		if (!this.state.ready) {
 			return <p>Loading...</p>;
@@ -133,6 +137,7 @@ export default class ListPage extends React.Component {
 						<TaskForm
 							key={viewTask.id}
 							task={viewTask}
+							tags={getAllTags(tasks)}
 							onSave={task => this.updateTask(task) && this.view(null)}
 							onCancel={() => this.view(null)}
 						/>
@@ -142,6 +147,7 @@ export default class ListPage extends React.Component {
 				<Dialog show={create}>
 					{create && (
 						<TaskForm
+							tags={getAllTags(tasks)}
 							onSave={task =>
 								this.addTask(task) && this.setState({ create: false })
 							}
@@ -158,7 +164,7 @@ export default class ListPage extends React.Component {
 					}}
 				/>
 				<TaskList
-					tasks={this.state.tasks}
+					tasks={tasks}
 					onChange={tasks => {
 						this.setTasks(tasks);
 					}}

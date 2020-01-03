@@ -18,7 +18,7 @@ class TaskForm extends React.Component {
 	}
 
 	render() {
-		const { task = {}, onCancel } = this.props;
+		const { task = {}, onCancel, tags } = this.props;
 
 		return (
 			<form onSubmit={this.handleSubmit} className={classes.form}>
@@ -32,7 +32,18 @@ class TaskForm extends React.Component {
 				/>
 
 				<label>Tag</label>
-				<input name="tag" defaultValue={task.tag} autoComplete="off" />
+				<input
+					name="tag"
+					defaultValue={task.tag}
+					autoComplete="off"
+					list="tags"
+				/>
+
+				<datalist id="tags">
+					{tags.map(tag => (
+						<option key={tag} value={tag} />
+					))}
+				</datalist>
 
 				<label>Description</label>
 				<textarea name="description" defaultValue={task.description} />
