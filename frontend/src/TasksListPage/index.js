@@ -1,13 +1,10 @@
 import React from "react";
 import Tasks from "../tasks";
 import SyncIndicator from "./SyncIndicator";
-import Dialog from "../components/Dialog";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import ImportExport from "./ImportExport";
 import { getAllTags } from "../selectors";
-import Hotkey from "./Hotkey";
-import AddButton from "./AddButton";
 
 export default class ListPage extends React.Component {
 	constructor(props) {
@@ -17,7 +14,6 @@ export default class ListPage extends React.Component {
 			ready: false,
 			saving: 0,
 			viewTask: null,
-			viewTaskShow: false,
 			create: false
 		};
 	}
@@ -70,63 +66,60 @@ export default class ListPage extends React.Component {
 		}
 	}
 
-	/**
-	 * Shows the given task in the dialog.
-	 * If task is null, hides the dialog.
-	 *
-	 * @param {task} viewTask
-	 */
-	view(viewTask) {
-		if (viewTask) {
-			this.setState({ create: null, viewTask, viewTaskShow: true });
-		} else {
-			// Hide the dialog, but don't remove the task so that
-			// the dialog can animate away nicely.
-			this.setState({ viewTaskShow: false });
-		}
-	}
-
 	render() {
-		const { viewTask, viewTaskShow, create, tasks } = this.state;
+		const { viewTask, create, tasks } = this.state;
 
 		if (!this.state.ready) {
 			return <p>Loading...</p>;
 		}
 
-		const handleCreateClick = () =>
-			this.setState({ viewTaskShow: null, create: true });
+		const handleCreateClick = () => {
+			this.setState({ create: true });
+		};
 
-		const closeModals = () => {
-			this.setState({ create: false });
-			this.view(null);
+		const content = () => {
+			if (viewTask) {
+				return (
+					<TaskForm
+						key={viewTask.id}
+						task={viewTask}
+						tags={getAllTags(tasks)}
+						onSave={task => {
+							this.updateTask(task);
+							this.setState({ viewTask: null });
+						}}
+						onCancel={() => this.setState({ viewTask: null })}
+					/>
+				);
+			}
+			if (create) {
+				return (
+					<TaskForm
+						tags={getAllTags(tasks)}
+						onSave={task => {
+							this.addTask(task);
+							this.setState({ create: false });
+						}}
+						onCancel={() => this.setState({ create: false })}
+					/>
+				);
+			}
+			return (
+				<TaskList
+					tasks={tasks}
+					onChange={tasks => {
+						this.setTasks(tasks);
+					}}
+					onView={task => {
+						this.setState({ viewTask: task });
+					}}
+					onAddClick={handleCreateClick}
+				/>
+			);
 		};
 
 		return (
 			<div className="tasks-container">
-				<Dialog show={viewTaskShow}>
-					{viewTask && (
-						<TaskForm
-							key={viewTask.id}
-							task={viewTask}
-							tags={getAllTags(tasks)}
-							onSave={task => this.updateTask(task) && this.view(null)}
-							onCancel={() => this.view(null)}
-						/>
-					)}
-				</Dialog>
-
-				<Dialog show={create}>
-					{create && (
-						<TaskForm
-							tags={getAllTags(tasks)}
-							onSave={task =>
-								this.addTask(task) && this.setState({ create: false })
-							}
-							onCancel={() => this.setState({ create: false })}
-						/>
-					)}
-				</Dialog>
-
 				<SyncIndicator number={this.state.saving} />
 				<ImportExport
 					listID={this.props.userHash}
@@ -134,15 +127,7 @@ export default class ListPage extends React.Component {
 						this.setTasks(tasks);
 					}}
 				/>
-				<TaskList
-					tasks={tasks}
-					onChange={tasks => {
-						this.setTasks(tasks);
-					}}
-					onView={t => this.view(t)}
-				/>
-				<AddButton onClick={handleCreateClick} />
-				<Hotkey filter={{ key: "Escape" }} func={closeModals} />
+				{content()}
 			</div>
 		);
 	}

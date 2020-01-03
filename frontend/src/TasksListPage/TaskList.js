@@ -3,9 +3,10 @@ import Task from "./Task";
 import TasksFilter from "./TasksFilter";
 import { getAllTags } from "../selectors";
 import Tag from "./Tag";
+import AddButton from "./AddButton";
 
 export default function TaskList(props) {
-	const { tasks, onChange, onView } = props;
+	const { tasks, onChange, onView, onAddClick } = props;
 	const [tab, setTab] = React.useState(0);
 	const [tag, setTag] = React.useState(null);
 
@@ -132,6 +133,7 @@ export default function TaskList(props) {
 						))}
 				</React.Fragment>
 			)}
+			<AddButton onClick={onAddClick} />
 		</React.Fragment>
 	);
 }

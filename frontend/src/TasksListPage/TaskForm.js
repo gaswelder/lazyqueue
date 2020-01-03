@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import Card from "./Card";
 
-const Form = styled.div`
+const Form = styled.form`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -38,64 +39,60 @@ const Form = styled.div`
 `;
 
 class TaskForm extends React.Component {
-	constructor() {
-		super();
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-	handleSubmit(event) {
-		const { onSave, task = {} } = this.props;
-		event.preventDefault();
-		const form = event.target;
-		const tag = form.querySelector('[name="tag"]').value;
-		const name = form.querySelector('[name="name"]').value;
-		const description = form.querySelector('[name="description"]').value;
-		onSave({ id: task.id, name, description, tag });
-	}
-
 	render() {
-		const { task = {}, onCancel, tags } = this.props;
+		const { task = {}, onCancel, tags, onSave } = this.props;
+
+		const handleSubmit = event => {
+			event.preventDefault();
+			const form = event.target;
+			const tag = form.querySelector('[name="tag"]').value;
+			const name = form.querySelector('[name="name"]').value;
+			const description = form.querySelector('[name="description"]').value;
+			onSave({ id: task.id, name, description, tag });
+		};
 
 		return (
-			<Form onSubmit={this.handleSubmit}>
-				<div>
-					<label>Name</label>
-					<input
-						name="name"
-						required
-						defaultValue={task.name}
-						autoFocus
-						autoComplete="off"
-					/>
-				</div>
+			<Card>
+				<Form onSubmit={handleSubmit}>
+					<div>
+						<label>Name</label>
+						<input
+							name="name"
+							required
+							defaultValue={task.name}
+							autoFocus
+							autoComplete="off"
+						/>
+					</div>
 
-				<div>
-					<label>Tag</label>
-					<input
-						name="tag"
-						defaultValue={task.tag}
-						autoComplete="off"
-						list="tags"
-					/>
-					<datalist id="tags">
-						{tags.map(tag => (
-							<option key={tag} value={tag} />
-						))}
-					</datalist>
-				</div>
+					<div>
+						<label>Tag</label>
+						<input
+							name="tag"
+							defaultValue={task.tag}
+							autoComplete="off"
+							list="tags"
+						/>
+						<datalist id="tags">
+							{tags.map(tag => (
+								<option key={tag} value={tag} />
+							))}
+						</datalist>
+					</div>
 
-				<div>
-					<label>Description</label>
-					<textarea name="description" defaultValue={task.description} />
-				</div>
+					<div>
+						<label>Description</label>
+						<textarea name="description" defaultValue={task.description} />
+					</div>
 
-				<div>
-					<button type="button" onClick={onCancel}>
-						Close
-					</button>
-					<button type="submit">Save</button>
-				</div>
-			</Form>
+					<div>
+						<button type="button" onClick={onCancel}>
+							Close
+						</button>
+						<button type="submit">Save</button>
+					</div>
+				</Form>
+			</Card>
 		);
 	}
 }
