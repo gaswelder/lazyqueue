@@ -1,6 +1,6 @@
 import React from "react";
-import foo from "./tasks.css";
 import Task from "./Task";
+import TasksFilter from "./TasksFilter";
 
 export default function TaskList(props) {
 	const { tasks, onChange, onView } = props;
@@ -69,27 +69,13 @@ export default function TaskList(props) {
 
 	return (
 		<React.Fragment>
-			<div className={foo.tabs}>
-				<a
-					href="#"
-					onClick={() => handleTabClick(0)}
-					className={tab == 0 && !tag ? foo.current : ""}
-				>
-					Active ({active.length})
-				</a>
-				<a
-					href="#"
-					onClick={() => handleTabClick(1)}
-					className={tab == 1 && !tag ? foo.current : ""}
-				>
-					Done ({done.length})
-				</a>
-				{tag && (
-					<a href="#" className={foo.current}>
-						{tag} ({active.filter(t => t.tag == tag).length})
-					</a>
-				)}
-			</div>
+			<TasksFilter
+				currentTab={tab}
+				currentTag={tag}
+				onTabClick={handleTabClick}
+				activeTasks={active}
+				finishedTasks={done}
+			/>
 			{tab === 0 && !tag && (
 				<React.Fragment>
 					{active.map((t, i) => (
