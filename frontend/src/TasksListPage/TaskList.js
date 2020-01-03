@@ -1,6 +1,8 @@
 import React from "react";
 import Task from "./Task";
 import TasksFilter from "./TasksFilter";
+import { getAllTags } from "../selectors";
+import Tag from "./Tag";
 
 export default function TaskList(props) {
 	const { tasks, onChange, onView } = props;
@@ -76,6 +78,9 @@ export default function TaskList(props) {
 				activeTasks={active}
 				finishedTasks={done}
 			/>
+			{getAllTags(tasks).map(tag => (
+				<Tag key={tag} title={tag} onClick={() => setTag(tag)} />
+			))}
 			{tab === 0 && !tag && (
 				<React.Fragment>
 					{active.map((t, i) => (

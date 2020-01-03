@@ -6,10 +6,7 @@ import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import ImportExport from "./ImportExport";
 import classes from "./index.css";
-
-const unique = xs => [...new Set(xs)];
-const getAllTags = tasks =>
-	unique(tasks.map(t => t.tag).filter(t => t != undefined && t != ""));
+import { getAllTags } from "../selectors";
 
 function Hotkey(props) {
 	const { filter, func } = props;
