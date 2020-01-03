@@ -2,10 +2,18 @@ import React from "react";
 import Hotkey from "./Hotkey";
 import styled from "styled-components";
 
-const Button = styled.button`
+const Container = styled.div`
 	position: fixed;
 	bottom: 6em;
 	right: 2em;
+	display: flex;
+	flex-direction: column;
+	& small {
+		margin-left: 0.5em;
+	}
+`;
+
+const Button = styled.button`
 	background-color: #f44336;
 	border: none;
 	border-radius: 50%;
@@ -20,9 +28,12 @@ export default function AddButton(props) {
 	const { onClick } = props;
 
 	return (
-		<React.Fragment>
-			<Button onClick={onClick}>+</Button>
+		<Container>
 			<Hotkey filter={{ shiftKey: true, key: "+" }} func={onClick} />
-		</React.Fragment>
+			<Button onClick={onClick}>+</Button>
+			<small>
+				<kbd>shift +</kbd>
+			</small>
+		</Container>
 	);
 }
