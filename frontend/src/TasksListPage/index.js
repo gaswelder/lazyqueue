@@ -5,9 +5,9 @@ import Dialog from "../components/Dialog";
 import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import ImportExport from "./ImportExport";
-import classes from "./index.css";
 import { getAllTags } from "../selectors";
 import Hotkey from "./Hotkey";
+import AddButton from "./AddButton";
 
 export default class ListPage extends React.Component {
 	constructor(props) {
@@ -141,13 +141,7 @@ export default class ListPage extends React.Component {
 					}}
 					onView={t => this.view(t)}
 				/>
-				<button className={classes.createButton} onClick={handleCreateClick}>
-					+
-				</button>
-				<Hotkey
-					filter={{ shiftKey: true, key: "+" }}
-					func={handleCreateClick}
-				/>
+				<AddButton onClick={handleCreateClick} />
 				<Hotkey filter={{ key: "Escape" }} func={closeModals} />
 			</div>
 		);
